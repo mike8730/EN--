@@ -1,0 +1,126 @@
+/* 全体 */
+.page-wrapper {
+  min-height: 100vh;
+  color: white;
+  font-family: "Noto Sans JP", sans-serif;
+
+  background-image: url('/assets/lounge-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative; /* 背景を正しく配置するために必須 */
+  height: 70vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 背景画像 */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/lounge-bg.jpg'); /* asset pipeline用パス */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.55);
+   z-index: 0; /* 背景を最背面に固定 */
+}
+
+/* Hero コンテンツ */
+.hero-content {
+  position: relative;
+  z-index: 10; /* 背景より前面に表示 */
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #D4AF37;
+}
+
+.hero-text {
+  font-size: 18px;
+  color: #ddd;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn-primary {
+  padding: 12px 32px;
+  background-color: #D4AF37;
+  color: black;
+  border-radius: 9999px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  padding: 12px 32px;
+  border: 2px solid #D4AF37;
+  color: #D4AF37;
+  border-radius: 9999px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Features Section */
+.features-section {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+}
+
+.feature-card {
+  background-color: #111;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.feature-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #D4AF37;
+}
+
+.feature-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.feature-text {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  border-top: 1px solid #333;
+}
