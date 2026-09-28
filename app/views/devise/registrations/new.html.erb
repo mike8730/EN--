@@ -1,62 +1,101 @@
-<h2>新規登録</h2>
+<div class="signup-page">
+  <div class="signup-container">
 
-<%= form_with model: resource, url: registration_path(resource_name), local: true do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <h2>新規登録</h2>
 
-  <div class="field">
-    <%= f.label :name, "名前" %>
-    <%= f.text_field :name %>
+    <%= form_with model: resource, url: registration_path(resource_name), local: true do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :name, "名前" %>
+        <%= f.text_field :name %>
+      </div>
+
+      <div class="field">
+        <%= f.label :gender, "性別" %>
+        <%= f.select :gender, User.genders.keys.map { |g| [g, g] } %>
+      </div>
+
+      <div class="field">
+        <%= f.label :birthday, "生年月日" %>
+
+        <div class="birthday-selects">
+          <%= select_year resource.birthday,
+              start_year: 1950,
+              end_year: Date.current.year,
+              field_name: "user[birthday(1i)]",
+              class: "birthday-select" %>
+          <span class="birthday-unit">年</span>
+
+          <%= select_month resource.birthday,
+              use_month_numbers: true,
+              field_name: "user[birthday(2i)]",
+              class: "birthday-select" %>
+          <span class="birthday-unit">月</span>
+
+          <%= select_day resource.birthday,
+              field_name: "user[birthday(3i)]",
+              class: "birthday-select" %>
+          <span class="birthday-unit">日</span>
+       </div>
+
+      </div>
+
+      <div class="field">
+        <%= f.label :avatar, "プロフィール画像（任意）" %>
+        <%= f.text_field :avatar %>
+      </div>
+
+      <div class="field">
+        <%= f.label :introduction, "自己紹介（任意）" %>
+        <%= f.text_area :introduction %>
+      </div>
+
+      <div class="field">
+        <%= f.label :group_role, "役割（任意）" %>
+        <%= f.select :group_role, User.group_roles.keys.map { |r| [r, r] }, include_blank: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :preferred_age_range, "希望年齢帯（任意）" %>
+
+        <div class="age-range-selects">
+          <%= f.select :preferred_age_min,
+            (18..80).map { |age| ["#{age}歳", age] },
+            { include_blank: "下限" } %>
+
+          <span>〜</span>
+
+           <%= f.select :preferred_age_max,
+             (18..80).map { |age| ["#{age}歳", age] },
+             { include_blank: "上限" } %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.email_field :email %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password, "パスワード" %>
+        <%= f.password_field :password %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation, "パスワード確認" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "登録する" %>
+      </div>
+
+    <% end %>
+
+    <div class="links">
+      <%= render "devise/shared/links" %>
+    </div>
+
   </div>
-
-  <div class="field">
-    <%= f.label :gender, "性別" %>
-    <%= f.select :gender, User.genders.keys.map { |g| [g, g] } %>
-  </div>
-
-  <div class="field">
-    <%= f.label :birthday, "生年月日" %>
-    <%= f.date_select :birthday, start_year: 1950, end_year: Time.current.year %>
-  </div>
-
-  <div class="field">
-    <%= f.label :avatar, "プロフィール画像（任意）" %>
-    <%= f.text_field :avatar %>
-  </div>
-
-  <div class="field">
-    <%= f.label :introduction, "自己紹介（任意）" %>
-    <%= f.text_area :introduction %>
-  </div>
-
-  <div class="field">
-    <%= f.label :group_role, "役割（任意）" %>
-    <%= f.select :group_role, User.group_roles.keys.map { |r| [r, r] }, include_blank: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :preferred_age_range, "希望年齢帯（任意）" %>
-    <%= f.text_field :preferred_age_range, placeholder: "20-25" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %>
-    <%= f.email_field :email %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password, "パスワード" %>
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "パスワード確認" %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "登録する" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
-
+</div>

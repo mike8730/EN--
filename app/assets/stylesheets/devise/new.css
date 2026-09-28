@@ -1,0 +1,373 @@
+/* =========================
+   新規登録ページ全体
+========================= */
+
+.signup-page {
+  min-height: 100vh;
+  padding: 80px 20px;
+  box-sizing: border-box;
+
+  color: white;
+  font-family: "Noto Sans JP", sans-serif;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url('/assets/lounge-bg.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+/* =========================
+   登録フォーム
+========================= */
+
+.signup-container {
+  width: 100%;
+  max-width: 620px;
+  padding: 45px 50px;
+
+  box-sizing: border-box;
+
+  background-color: rgba(17, 17, 17, 0.92);
+
+  border: 1px solid #333;
+  border-radius: 16px;
+}
+
+
+/* =========================
+   タイトル
+========================= */
+
+.signup-container h2 {
+  margin: 0 0 40px;
+
+  color: #D4AF37;
+  font-size: 32px;
+  font-weight: bold;
+
+  text-align: center;
+}
+
+
+/* =========================
+   各入力項目
+========================= */
+
+.field {
+  margin-bottom: 24px;
+}
+
+
+/* =========================
+   ラベル
+========================= */
+
+.field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #ddd;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+/* =========================
+   テキスト入力
+========================= */
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"],
+.field textarea,
+.field select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  color: white;
+  background-color: #222;
+
+  border: 1px solid #444;
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* =========================
+   テキストエリア
+========================= */
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+
+/* =========================
+   フォーカス時
+========================= */
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: #D4AF37;
+
+  box-shadow:
+    0 0 0 2px rgba(212, 175, 55, 0.15);
+}
+
+
+/* =========================
+   生年月日
+========================= */
+
+.birthday-selects {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+
+/* 生年月日のselect */
+
+.birthday-selects select {
+  width: auto;
+  box-sizing: border-box;
+
+  padding: 10px 12px;
+
+  color: white;
+  background-color: #222;
+
+  border: 1px solid #444;
+  border-radius: 8px;
+
+  font-size: 15px;
+}
+
+
+/* 年・月・日の文字 */
+
+.birthday-unit {
+  color: #ddd;
+  font-size: 15px;
+
+  margin-left: -4px;
+}
+
+
+/* =========================
+   希望年齢帯
+========================= */
+
+.age-range-selects {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* 年齢選択用のselect */
+
+.age-range-selects .age-select {
+  width: 120px;
+  box-sizing: border-box;
+}
+
+
+/* 「〜」 */
+
+.age-range-selects span {
+  color: #ddd;
+  font-size: 15px;
+}
+
+
+/* =========================
+   セレクトボックス
+========================= */
+
+.field select {
+  cursor: pointer;
+}
+
+
+/* =========================
+   プレースホルダー
+========================= */
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #777;
+}
+
+
+/* =========================
+   登録ボタン
+========================= */
+
+.actions {
+  margin-top: 35px;
+}
+
+.actions input[type="submit"] {
+  width: 100%;
+
+  padding: 13px 32px;
+
+  background-color: #D4AF37;
+  color: black;
+
+  border: none;
+  border-radius: 9999px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================
+   登録ボタン：ホバー
+========================= */
+
+.actions input[type="submit"]:hover {
+  background-color: #e0bd4f;
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   Deviseエラーメッセージ
+========================= */
+
+.signup-container #error_explanation {
+  margin-bottom: 30px;
+  padding: 15px 20px;
+
+  background-color: #1a1a1a;
+
+  border: 1px solid #8b0000;
+  border-radius: 8px;
+}
+
+.signup-container #error_explanation h2 {
+  margin: 0 0 10px;
+
+  color: #e57373;
+  font-size: 16px;
+  text-align: left;
+}
+
+.signup-container #error_explanation ul {
+  margin: 0;
+  padding-left: 20px;
+
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   Deviseリンク
+========================= */
+
+.links {
+  margin-top: 30px;
+
+  text-align: center;
+}
+
+.links a {
+  color: #D4AF37;
+
+  font-size: 14px;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.links a:hover {
+  color: #e0bd4f;
+  text-decoration: underline;
+}
+
+
+/* =========================
+   スマートフォン
+========================= */
+
+@media (max-width: 600px) {
+
+  .signup-page {
+    padding: 40px 15px;
+  }
+
+  .signup-container {
+    padding: 35px 25px;
+  }
+
+  .signup-container h2 {
+    margin-bottom: 30px;
+    font-size: 26px;
+  }
+
+  .birthday-selects {
+    gap: 5px;
+  }
+
+  .birthday-selects select {
+    padding: 9px 6px;
+    font-size: 14px;
+  }
+
+  .birthday-unit {
+    font-size: 14px;
+  }
+
+  /* 希望年齢帯 */
+
+  .age-range-selects {
+    gap: 6px;
+  }
+
+  .age-range-selects .age-select {
+    width: 110px;
+    padding: 9px 8px;
+    font-size: 14px;
+  }
+
+  .age-range-selects span {
+    font-size: 14px;
+  }
+
+}
