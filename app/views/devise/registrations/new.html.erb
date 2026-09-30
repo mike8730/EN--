@@ -20,25 +20,14 @@
         <%= f.label :birthday, "生年月日" %>
 
         <div class="birthday-selects">
-          <%= select_year resource.birthday,
-              start_year: 1950,
-              end_year: Date.current.year,
-              field_name: "user[birthday(1i)]",
-              class: "birthday-select" %>
-          <span class="birthday-unit">年</span>
-
-          <%= select_month resource.birthday,
-              use_month_numbers: true,
-              field_name: "user[birthday(2i)]",
-              class: "birthday-select" %>
-          <span class="birthday-unit">月</span>
-
-          <%= select_day resource.birthday,
-              field_name: "user[birthday(3i)]",
-              class: "birthday-select" %>
-          <span class="birthday-unit">日</span>
-       </div>
-
+          <%= f.date_select :birthday,
+                start_year: 1950,
+                end_year: Date.current.year - 18,
+                use_month_numbers: true,
+                order: [:year, :month, :day],
+                date_separator: "",
+                class: "birthday-select" %>
+        </div>
       </div>
 
       <div class="field">
@@ -62,13 +51,15 @@
         <div class="age-range-selects">
           <%= f.select :preferred_age_min,
             (18..80).map { |age| ["#{age}歳", age] },
-            { include_blank: "下限" } %>
+            { include_blank: "下限" },
+            class: "age-select" %>
 
           <span>〜</span>
 
-           <%= f.select :preferred_age_max,
-             (18..80).map { |age| ["#{age}歳", age] },
-             { include_blank: "上限" } %>
+          <%= f.select :preferred_age_max,
+            (18..80).map { |age| ["#{age}歳", age] },
+            { include_blank: "上限" },
+            class: "age-select" %>
         </div>
       </div>
 

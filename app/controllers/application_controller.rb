@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
       :avatar,
       :introduction,
       :group_role,
-      :preferred_age_range
+      :preferred_age_min,
+      :preferred_age_max
     ])
 
     devise_parameter_sanitizer.permit(:account_update, keys: [
@@ -21,7 +22,8 @@ class ApplicationController < ActionController::Base
       :avatar,
       :introduction,
       :group_role,
-      :preferred_age_range
+      :preferred_age_min,
+      :preferred_age_max
     ])
   end
 end

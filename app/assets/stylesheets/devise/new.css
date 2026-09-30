@@ -137,26 +137,20 @@
     0 0 0 2px rgba(212, 175, 55, 0.15);
 }
 
-
 /* =========================
-   生年月日
+   生年月日（date_select）
 ========================= */
 
 .birthday-selects {
   display: flex;
   align-items: center;
   gap: 8px;
-
   white-space: nowrap;
 }
 
-
-/* 生年月日のselect */
-
+/* date_select が生成する select を横並びにする */
 .birthday-selects select {
   width: auto;
-  box-sizing: border-box;
-
   padding: 10px 12px;
 
   color: white;
@@ -168,16 +162,24 @@
   font-size: 15px;
 }
 
-
-/* 年・月・日の文字 */
-
-.birthday-unit {
-  color: #ddd;
-  font-size: 15px;
-
-  margin-left: -4px;
+/* 年・月・日の単位を CSS で付ける */
+.birthday-selects select:nth-of-type(1)::after {
+  content: "年";
+}
+.birthday-selects select:nth-of-type(2)::after {
+  content: "月";
+}
+.birthday-selects select:nth-of-type(3)::after {
+  content: "日";
 }
 
+/* 疑似要素を inline-block にする */
+.birthday-selects select::after {
+  display: inline-block;
+  margin-left: 4px;
+  color: #ddd;
+  font-size: 15px;
+}
 
 /* =========================
    希望年齢帯
@@ -204,7 +206,6 @@
   color: #ddd;
   font-size: 15px;
 }
-
 
 /* =========================
    セレクトボックス
