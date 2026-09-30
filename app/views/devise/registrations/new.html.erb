@@ -30,9 +30,21 @@
         </div>
       </div>
 
-      <div class="field">
+      <div class="field" data-controller="avatar-crop">
         <%= f.label :avatar, "プロフィール画像（任意）" %>
-        <%= f.text_field :avatar %>
+        <%= f.file_field :avatar,
+              accept: "image/*",
+              data: {
+              avatar_crop_target: "input",
+              action: "change->avatar-crop#select"
+              } %>
+        <div>
+          <img data-avatar-crop-target="preview" data-action="click->avatar-crop#reCrop" class="avatar-preview">
+        </div>
+
+        <button type="button" data-avatar-crop-target="cropButton" data-action="click->avatar-crop#crop" style="display: none;">
+          画像を切り抜く
+        </button>
       </div>
 
       <div class="field">

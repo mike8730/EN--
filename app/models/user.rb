@@ -17,6 +17,7 @@ class User < ApplicationRecord
   validate :must_be_18_or_older
   validate :age_range_valid
   
+  has_one_attached :avatar
 
   private
 
