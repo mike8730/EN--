@@ -10,7 +10,8 @@ Rails.application.routes.draw do
 
   root "home#index"
 
+  get "dashboard", to: "dashboard#index"
+
   devise_for :users
 
-  resource :home, only:[:index]
 end

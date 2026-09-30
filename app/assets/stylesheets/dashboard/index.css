@@ -1,0 +1,111 @@
+body {
+  background: #0a0a0a;
+  color: #fff;
+  font-family: 'Helvetica', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+/* セクションタイトル */
+.section-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ff0099;
+  font-weight: bold;
+}
+
+/* ストーリー */
+.stories-list {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.story-item {
+  text-align: center;
+}
+
+.story-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #ff0099;
+  object-fit: cover;
+}
+
+.story-name {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* 投稿カード */
+.post-card {
+  background: #111;
+  border: 1px solid #222;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(255, 0, 153, 0.3);
+}
+
+.post-title {
+  font-size: 18px;
+  color: #ff0099;
+}
+
+.post-meta {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.post-desc {
+  margin: 10px 0;
+}
+
+.post-like-btn {
+  background: #ff0099;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* プロフィールカード */
+.profile-card {
+  background: #111;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  display: flex;
+  gap: 15px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.profile-info h3 {
+  color: #00ffff;
+}
+
+.profile-like-btn {
+  margin-top: 10px;
+  background: #00ffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #000;
+  cursor: pointer;
+}

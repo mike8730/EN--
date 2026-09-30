@@ -1,0 +1,70 @@
+<div class="home-container">
+
+
+  <!-- ストーリー（即飲み募集） -->
+  <div class="stories-section">
+    <h2 class="section-title">今すぐ飲める人</h2>
+    <div class="stories-list">
+      <div class="story-item">
+        <img src="https://placehold.co/80x80" class="story-avatar">
+        <p class="story-name">ゆか</p>
+      </div>
+      <div class="story-item">
+        <img src="https://placehold.co/80x80" class="story-avatar">
+        <p class="story-name">あいり</p>
+      </div>
+      <div class="story-item">
+        <img src="https://placehold.co/80x80" class="story-avatar">
+        <p class="story-name">みさき</p>
+      </div>
+      <div class="story-item">
+        <%= image_tag @user.avatar, class:"story-avatar" %>
+        <p class="story-name">みさき</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 投稿（予定ベースの募集） -->
+  <div class="posts-section">
+    <h2 class="section-title">今週の募集</h2>
+
+    <div class="post-card">
+      <h3 class="post-title">渋谷で2:2希望</h3>
+      <p class="post-meta">10/3(金) 20:00〜</p>
+      <p class="post-desc">20代前半の女子2人です。落ち着いた飲み希望。</p>
+      <button class="post-like-btn">いいねする</button>
+    </div>
+
+    <div class="post-card">
+      <h3 class="post-title">新宿で飲みたい</h3>
+      <p class="post-meta">10/4(土) 19:00〜</p>
+      <p class="post-desc">社会人3年目の男子2人。楽しく飲める方。</p>
+      <button class="post-like-btn">いいねする</button>
+    </div>
+  </div>
+
+  <!-- プロフィールカード（本気マッチ） -->
+  <div class="profiles-section">
+    <h2 class="section-title">おすすめのユーザー</h2>
+
+    <div class="profile-card">
+      <img src="https://placehold.co/300x300" class="profile-avatar">
+      <div class="profile-info">
+        <h3>ゆか（23）</h3>
+        <p>渋谷 / 美容系</p>
+        <button class="profile-like-btn">いいね</button>
+      </div>
+    </div>
+
+    <div class="profile-card">
+      <img src="https://placehold.co/300x300" class="profile-avatar">
+      <div class="profile-info">
+        <h3>みさき（24）</h3>
+        <p>新宿 / IT企業</p>
+        <button class="profile-like-btn">いいね</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
