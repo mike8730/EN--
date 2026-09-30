@@ -1,0 +1,29 @@
+<div class="signup-page">
+  <div class="signup-container">
+
+    <h2>ログイン</h2>
+
+    <%= form_with model: resource, url: session_path(resource_name), local: true do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.email_field :email %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password, "パスワード" %>
+        <%= f.password_field :password %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "ログインする" %>
+      </div>
+    <% end %>
+
+    <div class="links">
+      <%= link_to "新規登録はこちら", new_registration_path(resource_name) %>
+    </div>
+
+  </div>
+</div>

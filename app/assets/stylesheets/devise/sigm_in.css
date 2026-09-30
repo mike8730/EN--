@@ -1,0 +1,194 @@
+/* =========================
+   ログインページ全体
+========================= */
+
+.signup-page {
+  min-height: 100vh;
+  padding: 80px 20px;
+  box-sizing: border-box;
+
+  color: white;
+  font-family: "Noto Sans JP", sans-serif;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url('/assets/lounge-bg.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+/* =========================
+   ログインフォーム
+========================= */
+
+.signup-container {
+  width: 100%;
+  max-width: 620px;
+  padding: 45px 50px;
+
+  box-sizing: border-box;
+
+  background-color: rgba(17, 17, 17, 0.92);
+
+  border: 1px solid #333;
+  border-radius: 16px;
+}
+
+
+/* =========================
+   タイトル
+========================= */
+
+.signup-container h2 {
+  margin: 0 0 40px;
+
+  color: #D4AF37;
+  font-size: 32px;
+  font-weight: bold;
+
+  text-align: center;
+}
+
+
+/* =========================
+   各入力項目
+========================= */
+
+.field {
+  margin-bottom: 24px;
+}
+
+.field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #ddd;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.field input[type="email"],
+.field input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  color: white;
+  background-color: #222;
+
+  border: 1px solid #444;
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.field input:focus {
+  border-color: #D4AF37;
+
+  box-shadow:
+    0 0 0 2px rgba(212, 175, 55, 0.15);
+}
+
+
+/* =========================
+   ログインボタン
+========================= */
+
+.actions {
+  margin-top: 35px;
+}
+
+.actions input[type="submit"] {
+  width: 100%;
+
+  padding: 13px 32px;
+
+  background-color: #D4AF37;
+  color: black;
+
+  border: none;
+  border-radius: 9999px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.actions input[type="submit"]:hover {
+  background-color: #e0bd4f;
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   Deviseリンク
+========================= */
+
+.links {
+  margin-top: 30px;
+
+  text-align: center;
+}
+
+.links a {
+  color: #D4AF37;
+
+  font-size: 14px;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.links a:hover {
+  color: #e0bd4f;
+  text-decoration: underline;
+}
+
+
+/* =========================
+   スマートフォン
+========================= */
+
+@media (max-width: 600px) {
+
+  .signup-page {
+    padding: 40px 15px;
+  }
+
+  .signup-container {
+    padding: 35px 25px;
+  }
+
+  .signup-container h2 {
+    margin-bottom: 30px;
+    font-size: 26px;
+  }
+
+  .field input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}

@@ -65,3 +65,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "devise"
+gem 'image_processing', '~>1.2'
+gem 'mini_magick'
