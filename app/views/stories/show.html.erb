@@ -1,0 +1,43 @@
+<div class="story-show-container">
+
+  <div class="story-show-header">
+    <%= image_tag(
+      @story.user.avatar.presence || "default_avatar.png",
+      class: "story-show-avatar"
+    ) %>
+
+    <p class="story-show-user-name">
+      <%= @story.user.name %>
+    </p>
+  </div>
+
+  <div class="story-show-media">
+    <% if @story.media.content_type.start_with?("image") %>
+      <%= image_tag @story.media, class: "story-show-image" %>
+    <% elsif @story.media.content_type.start_with?("video") %>
+      <%= video_tag @story.media,
+          autoplay: true,
+          muted: false,
+          playsinline: true,
+          class: "story-show-video",
+          id: "storyVideo" %>
+    <% end %>
+  </div>
+
+  <div class="story-show-caption">
+    <p><%= @story.caption %></p>
+  </div>
+
+</div>
+
+<script>
+  // インスタ風：画面タップで再生/停止
+document.addEventListener("turbo:load", () => {
+  const video = document.getElementById("storyVideo");
+  if (!video) return;
+
+  video.addEventListener("click", () => {
+    video.paused ? video.play() : video.pause();
+  });
+});
+</script>

@@ -15,6 +15,10 @@ class StoriesController < ApplicationController
     end
   end
 
+  def show
+    @story = Story.where("expires_at > ?", Time.current).find(params[:id])
+  end
+
   private
   
   def story_params
