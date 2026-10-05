@@ -1,5 +1,10 @@
 <div class="home-container">
 
+  <% if user_signed_in? %>
+     <%= button_to "ログアウト",
+         destroy_user_session_path,
+         method: :delete %>
+  <% end %>
 
   <!-- ストーリー（即飲み募集） -->
   <div class="stories-section">
@@ -7,26 +12,24 @@
     <div class="stories-list">
       <div class="story-item">
         <%= link_to new_story_path do %>
-          <img src="https://placehold.co/80x80" class="story-avatar">
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar, class:"story-avatar" %>
+          <% else %>
+            <%= image_tag "default_avatar.png", class:"story-avatar"%>
+          <% end %>
           <p class="story-name">ストーリーを追加</p>
         <% end %>
       </div>
-      <div class="story-item">
-        <img src="https://placehold.co/80x80" class="story-avatar">
-        <p class="story-name">ゆか</p>
-      </div>
-      <div class="story-item">
-        <img src="https://placehold.co/80x80" class="story-avatar">
-        <p class="story-name">あいり</p>
-      </div>
-      <div class="story-item">
-        <img src="https://placehold.co/80x80" class="story-avatar">
-        <p class="story-name">みさき</p>
-      </div>
-      <div class="story-item">
-        <%= image_tag @user.avatar, class:"story-avatar" %>
-        <p class="story-name">みさき</p>
-      </div>
+      <% @stories.each do |story| %>
+        <div class="story-item">
+          <%= link_to story_path(story) do %>
+            <%= image_tag(story.user.avatar.presence || "default_avatar.png", class: "story-avatar") %>
+          <% end %>
+          <p class="story-name">
+            <%= story.user.name %>
+          </p>   
+        </div>
+      <% end %>
     </div>
   </div>
 
