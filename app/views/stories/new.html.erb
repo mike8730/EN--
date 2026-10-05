@@ -1,0 +1,33 @@
+<div class="story-new-container">
+
+  <h2 class="section-title">ストーリー投稿</h2>
+
+  <div class="story-card">
+
+    <%= form_with model: @story, local: true, html: { class: "story-form" } do |f| %>
+
+      <div class="form-group">
+        <%= f.label :media, "動画ファイル", class: "form-label" %>
+        <%= f.file_field :media, accept: "video/*", class: "form-input" %>
+
+        <p class="form-note">
+          投稿する動画を選択してください
+        </p>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :caption, "キャプション（任意）", class: "form-label" %>
+        <%= f.text_area :caption,
+              placeholder: "募集内容や一言メッセージを書いてください",
+              class: "form-textarea" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "投稿する", class: "story-submit-btn" %>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>
