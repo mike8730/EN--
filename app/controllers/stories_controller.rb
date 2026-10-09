@@ -17,6 +17,7 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.where("expires_at > ?", Time.current).find(params[:id])
+    StoryRead.find_or_create_by(user: current_user, story: @story)
   end
 
   private

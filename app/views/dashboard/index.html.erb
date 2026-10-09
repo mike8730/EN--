@@ -9,8 +9,11 @@
   <!-- ストーリー（即飲み募集） -->
   <div class="stories-section">
     <h2 class="section-title">今すぐ飲める人</h2>
+
     <div class="stories-list">
-      <div class="story-item">
+
+      <!-- 自分のストーリー追加 -->
+      <div class="story-item story-unread">
         <%= link_to new_story_path do %>
           <% if current_user.avatar.attached? %>
             <%= image_tag current_user.avatar, class:"story-avatar" %>
@@ -20,16 +23,22 @@
           <p class="story-name">ストーリーを追加</p>
         <% end %>
       </div>
+
+      <!-- 他ユーザーのストーリー -->
       <% @stories.each do |story| %>
-        <div class="story-item">
+        <% read = StoryRead.exists?(user: current_user, story: story) %>
+
+        <div class="story-item <%= read ? 'story-read' : 'story-unread' %>">
           <%= link_to story_path(story) do %>
             <%= image_tag(story.user.avatar.presence || "default_avatar.png", class: "story-avatar") %>
           <% end %>
+
           <p class="story-name">
             <%= story.user.name %>
-          </p>   
+          </p>
         </div>
       <% end %>
+
     </div>
   </div>
 
