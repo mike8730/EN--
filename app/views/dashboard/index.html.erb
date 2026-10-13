@@ -24,18 +24,17 @@
         <% end %>
       </div>
 
-      <!-- 他ユーザーのストーリー -->
-      <% @stories.each do |story| %>
-        <% read = StoryRead.exists?(user: current_user, story: story) %>
+      <!-- ユーザーごとにストーリーをまとめて表示 -->
+      <% @story_groups.each do |user, stories| %>
+        <% read = stories.any? { |s| StoryRead.exists?(user: current_user, story: s) } %>
 
         <div class="story-item <%= read ? 'story-read' : 'story-unread' %>">
-          <%= link_to story_path(story) do %>
-            <%= image_tag(story.user.avatar.presence || "default_avatar.png", class: "story-avatar") %>
+          <%= link_to story_path(stories.last, index: 0) do %>
+            <%= image_tag(user.avatar.presence || "default_avatar.png", class: "story-avatar") %>
           <% end %>
 
-          <p class="story-name">
-            <%= story.user.name %>
-          </p>
+
+          <p class="story-name"><%= user.name %></p>
         </div>
       <% end %>
 

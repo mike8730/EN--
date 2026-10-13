@@ -1,5 +1,4 @@
 <div class="story-show-container">
-
   <div class="story-show-header">
     <%= image_tag(
       @story.user.avatar.presence || "default_avatar.png",
@@ -14,6 +13,18 @@
   <div class="story-show-media">
     <% if @story.media.content_type.start_with?("image") %>
       <%= image_tag @story.media, class: "story-show-image" %>
+
+      <!-- 画像の場合は一定時間後に次へ -->
+      <script>
+        document.addEventListener("turbo:load", () => {
+          setTimeout(() => {
+            <% if @next_story %>
+              Turbo.load("<%= story_path(@next_story) %>");
+            <% end %>
+          }, 3000); // 画像は3秒表示
+        });
+      </script>
+
     <% elsif @story.media.content_type.start_with?("video") %>
       <%= video_tag @story.media,
           autoplay: true,
@@ -21,6 +32,26 @@
           playsinline: true,
           class: "story-show-video",
           id: "storyVideo" %>
+
+      <script>
+        document.addEventListener("turbo:load", () => {
+          const video = document.getElementById("storyVideo");
+          if (!video) return;
+
+          // タップで再生/停止
+          video.addEventListener("click", () => {
+            video.paused ? video.play() : video.pause();
+          });
+
+          // 動画終了 → 次のストーリーへ
+          video.addEventListener("ended", () => {
+            <% if @next_story %>
+              Turbo.visit("<%= story_path(@next_story) %>");
+            <% end %>
+          });
+        });
+      </script>
+
     <% end %>
   </div>
 
@@ -29,15 +60,3 @@
   </div>
 
 </div>
-
-<script>
-  // インスタ風：画面タップで再生/停止
-document.addEventListener("turbo:load", () => {
-  const video = document.getElementById("storyVideo");
-  if (!video) return;
-
-  video.addEventListener("click", () => {
-    video.paused ? video.play() : video.pause();
-  });
-});
-</script>

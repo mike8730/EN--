@@ -18,7 +18,18 @@ class StoriesController < ApplicationController
   def show
     @story = Story.where("expires_at > ?", Time.current).find(params[:id])
     StoryRead.find_or_create_by(user: current_user, story: @story)
+
+    @stories = Story
+      .where(user: @story.user)
+      .where("expires_at > ?", Time.current)
+      .order(created_at: :asc)
+
+    @index = @stories.find_index { |s| s.id == @story.id }
+
+    @next_story = @stories[@index + 1]
+    @prev_story = @stories[@index - 1] if @index > 0
   end
+
 
   private
   
