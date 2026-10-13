@@ -74,11 +74,9 @@ function handleVideoStory() {
     if (nextUrl) Turbo.visit(nextUrl);
   });
 
-  // 再生・停止に合わせて進行バーも同期
   video.addEventListener("pause", () => pauseProgress());
   video.addEventListener("play", () => resumeProgress());
 
-  // 動画クリックで pause/play
   video.addEventListener("click", () => {
     video.paused ? video.play() : video.pause();
   });
@@ -97,10 +95,60 @@ function setupTapNavigation() {
   if (right) right.addEventListener("click", () => nextUrl && Turbo.visit(nextUrl));
 }
 
+// スマホ：下スワイプで閉じる
+function setupSwipeToClose() {
+  const container = document.querySelector(".story-show-container");
+  if (!container) return;
+
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  container.addEventListener("touchstart", (e) => {
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  });
+
+  container.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+
+    const diff = currentY - startY;
+
+    if (diff > 0) {
+      container.style.transform = `translateY(${diff}px)`;
+      container.style.transition = "none";
+    }
+  });
+
+  container.addEventListener("touchend", () => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const diff = currentY - startY;
+
+    if (diff > 120) {
+      Turbo.visit("/dashboard");
+    } else {
+      container.style.transition = "transform 0.2s ease";
+      container.style.transform = "translateY(0)";
+    }
+  });
+}
+
+// PC：ESCキーで閉じる
+function setupEscClose() {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      Turbo.visit("/dashboard");
+    }
+  });
+}
+
 document.addEventListener("turbo:load", () => {
   handleImageStory();
   handleVideoStory();
   setupTapNavigation();
+  setupSwipeToClose();
+  setupEscClose();
 });
-
-

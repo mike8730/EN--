@@ -112,3 +112,20 @@
   right: 0;
 }
 
+.story-close-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* スマホでは非表示 */
+@media (max-width: 768px) {
+  .story-close-button {
+    display: none;
+  }
+}
+
