@@ -1,57 +1,37 @@
 <div class="story-show-container">
-  <div class="story-show-header">
-    <%= image_tag(
-      @story.user.avatar.presence || "default_avatar.png",
-      class: "story-show-avatar"
-    ) %>
 
-    <p class="story-show-user-name">
-      <%= @story.user.name %>
-    </p>
+  <!-- 進行バー -->
+  <div class="story-progress-wrapper">
+    <% @stories.each_with_index do |s, i| %>
+      <div class="story-progress-bar">
+        <div class="story-progress-fill <%= 'active' if i == @index %>"></div>
+      </div>
+    <% end %>
   </div>
+
+  <div class="story-show-header">
+    <%= image_tag(@story.user.avatar.presence || "default_avatar.png", class: "story-show-avatar") %>
+    <p class="story-show-user-name"><%= @story.user.name %></p>
+  </div>
+
+  <!-- 左右タップ領域（動画より後ろに置く） -->
+  <div id="tapLeft" class="story-tap-left"></div>
+  <div id="tapRight" class="story-tap-right"></div>
 
   <div class="story-show-media">
     <% if @story.media.content_type.start_with?("image") %>
-      <%= image_tag @story.media, class: "story-show-image" %>
+      <%= image_tag @story.media,
+          class: "story-show-image",
+          data: { duration: 3000 } %>
 
-      <!-- 画像の場合は一定時間後に次へ -->
-      <script>
-        document.addEventListener("turbo:load", () => {
-          setTimeout(() => {
-            <% if @next_story %>
-              Turbo.load("<%= story_path(@next_story) %>");
-            <% end %>
-          }, 3000); // 画像は3秒表示
-        });
-      </script>
-
-    <% elsif @story.media.content_type.start_with?("video") %>
+    <% else %>
       <%= video_tag @story.media,
           autoplay: true,
           muted: false,
           playsinline: true,
           class: "story-show-video",
-          id: "storyVideo" %>
-
-      <script>
-        document.addEventListener("turbo:load", () => {
-          const video = document.getElementById("storyVideo");
-          if (!video) return;
-
-          // タップで再生/停止
-          video.addEventListener("click", () => {
-            video.paused ? video.play() : video.pause();
-          });
-
-          // 動画終了 → 次のストーリーへ
-          video.addEventListener("ended", () => {
-            <% if @next_story %>
-              Turbo.visit("<%= story_path(@next_story) %>");
-            <% end %>
-          });
-        });
-      </script>
-
+          id: "storyVideo",
+          data: { next: (@next_story ? story_path(@next_story) : "") } %>
     <% end %>
   </div>
 
@@ -60,3 +40,11 @@
   </div>
 
 </div>
+
+<!-- 次ストーリーの URL を JS に渡す -->
+<div id="storyNavigation"
+     data-next="<%= @next_story ? story_path(@next_story) : '' %>"
+     data-prev="<%= @prev_story ? story_path(@prev_story) : '' %>">
+</div>
+
+

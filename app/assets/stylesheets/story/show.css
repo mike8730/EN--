@@ -61,3 +61,54 @@
   padding: 0 20px;
   z-index: 10;
 }
+
+.story-progress-wrapper {
+  display: flex;
+  gap: 4px;
+  padding: 10px;
+}
+
+.story-progress-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.story-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+.story-progress-fill.active {
+  width: 0%;
+}
+
+/* 動画を最前面にする */
+.story-show-video,
+.story-show-image {
+  position: relative;
+  z-index: 10;
+}
+
+/* 左右タップ領域は動画の後ろに置く */
+.story-tap-left,
+.story-tap-right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  z-index: 5; /* 動画より下 */
+}
+
+.story-tap-left {
+  left: 0;
+}
+
+.story-tap-right {
+  right: 0;
+}
+
