@@ -14,40 +14,60 @@
     <% end %>
   </div>
 
+  <!-- ユーザー情報 -->
   <div class="story-show-header">
-    <%= image_tag(@story.user.avatar.presence || "default_avatar.png", class: "story-show-avatar") %>
-    <p class="story-show-user-name"><%= @story.user.name %></p>
+    <% if @story.user.avatar.attached? %>
+      <%= image_tag @story.user.avatar, class: "story-show-avatar" %>
+    <% else %>
+      <%= image_tag "default_avatar.png", class: "story-show-avatar" %>
+    <% end %>
+
+    <p class="story-show-user-name">
+      <%= @story.user.name %>
+    </p>
   </div>
 
   <!-- 左右タップ領域 -->
   <div id="tapLeft" class="story-tap-left"></div>
   <div id="tapRight" class="story-tap-right"></div>
 
+  <!-- ストーリー本体 -->
   <div class="story-show-media">
     <% if @story.media.content_type.start_with?("image") %>
+
+      <!-- 画像ストーリー -->
       <%= image_tag @story.media,
           class: "story-show-image",
-          data: { duration: 3000 } %>
+          data: {
+            duration: 3000,
+            next: @next_url
+          } %>
 
     <% else %>
+
+      <!-- 動画ストーリー -->
       <%= video_tag @story.media,
           autoplay: true,
           muted: false,
           playsinline: true,
           class: "story-show-video",
           id: "storyVideo",
-          data: { next: (@next_story ? story_path(@next_story) : "") } %>
+          data: {
+            next: @next_url
+          } %>
+
     <% end %>
   </div>
 
+  <!-- キャプション -->
   <div class="story-show-caption">
     <p><%= @story.caption %></p>
   </div>
 
 </div>
 
-<!-- 次ストーリーの URL を JS に渡す -->
+<!-- JavaScriptへ前後のストーリーURLを渡す -->
 <div id="storyNavigation"
-     data-next="<%= @next_story ? story_path(@next_story) : '' %>"
-     data-prev="<%= @prev_story ? story_path(@prev_story) : '' %>">
+     data-next="<%= @next_url %>"
+     data-prev="<%= @prev_url %>">
 </div>

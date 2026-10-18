@@ -2,13 +2,18 @@ let progressStartTime = null;
 let progressPausedTime = null;
 let progressDuration = null;
 let progressRequest = null;
+let imageStoryTimeout = null;
 
+// 進行バーを動かす
 function animateProgressBar(timestamp) {
-  if (!progressStartTime) progressStartTime = timestamp;
+  if (progressStartTime === null) {
+    progressStartTime = timestamp;
+  }
 
   const elapsed = timestamp - progressStartTime;
   const activeBar = document.querySelector(".story-progress-fill.active");
-  if (!activeBar) return;
+
+  if (!activeBar || !progressDuration) return;
 
   const progress = Math.min(elapsed / progressDuration, 1);
   activeBar.style.width = `${progress * 100}%`;
@@ -18,30 +23,50 @@ function animateProgressBar(timestamp) {
   }
 }
 
+// 進行バーを開始
 function startProgress(duration) {
+  cancelAnimationFrame(progressRequest);
+
   progressDuration = duration;
   progressStartTime = null;
   progressPausedTime = null;
 
   const activeBar = document.querySelector(".story-progress-fill.active");
-  if (activeBar) activeBar.style.width = "0%";
+
+  if (activeBar) {
+    activeBar.style.width = "0%";
+  }
 
   progressRequest = requestAnimationFrame(animateProgressBar);
 }
 
+// 進行バーを一時停止
 function pauseProgress() {
   cancelAnimationFrame(progressRequest);
   progressPausedTime = performance.now();
 }
 
+// 進行バーを再開
 function resumeProgress() {
-  if (!progressPausedTime) return;
+  if (progressPausedTime === null || progressStartTime === null) return;
 
   const now = performance.now();
   const pauseDuration = now - progressPausedTime;
+
   progressStartTime += pauseDuration;
+  progressPausedTime = null;
 
   progressRequest = requestAnimationFrame(animateProgressBar);
+}
+
+// ストーリー移動時にタイマーを停止
+function navigateStory(url) {
+  if (!url) return;
+
+  clearTimeout(imageStoryTimeout);
+  cancelAnimationFrame(progressRequest);
+
+  Turbo.visit(url);
 }
 
 // 画像ストーリー
@@ -50,12 +75,16 @@ function handleImageStory() {
   if (!img) return;
 
   const duration = Number(img.dataset.duration || 3000);
+  const nextUrl = img.dataset.next;
+
   startProgress(duration);
 
-  const nextUrl = document.getElementById("storyNavigation").dataset.next;
+  clearTimeout(imageStoryTimeout);
 
-  setTimeout(() => {
-    if (nextUrl) Turbo.visit(nextUrl);
+  imageStoryTimeout = setTimeout(() => {
+    if (nextUrl) {
+      navigateStory(nextUrl);
+    }
   }, duration);
 }
 
@@ -67,32 +96,62 @@ function handleVideoStory() {
   const nextUrl = video.dataset.next;
 
   video.addEventListener("loadedmetadata", () => {
-    startProgress(video.duration * 1000);
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      startProgress(video.duration * 1000);
+    }
   });
 
   video.addEventListener("ended", () => {
-    if (nextUrl) Turbo.visit(nextUrl);
+    if (nextUrl) {
+      navigateStory(nextUrl);
+    }
   });
 
-  video.addEventListener("pause", () => pauseProgress());
-  video.addEventListener("play", () => resumeProgress());
+  video.addEventListener("pause", () => {
+    pauseProgress();
+  });
+
+  video.addEventListener("play", () => {
+    resumeProgress();
+  });
 
   video.addEventListener("click", () => {
-    video.paused ? video.play() : video.pause();
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
   });
 }
 
 // 左右タップ
 function setupTapNavigation() {
   const nav = document.getElementById("storyNavigation");
+  if (!nav) return;
+
   const nextUrl = nav.dataset.next;
   const prevUrl = nav.dataset.prev;
 
   const left = document.getElementById("tapLeft");
   const right = document.getElementById("tapRight");
 
-  if (left) left.addEventListener("click", () => prevUrl && Turbo.visit(prevUrl));
-  if (right) right.addEventListener("click", () => nextUrl && Turbo.visit(nextUrl));
+  // 左側：前のストーリーへ
+  if (left) {
+    left.addEventListener("click", () => {
+      if (prevUrl) {
+        navigateStory(prevUrl);
+      }
+    });
+  }
+
+  // 右側：次のストーリーへ
+  if (right) {
+    right.addEventListener("click", () => {
+      if (nextUrl) {
+        navigateStory(nextUrl);
+      }
+    });
+  }
 }
 
 // スマホ：下スワイプで閉じる
@@ -106,11 +165,13 @@ function setupSwipeToClose() {
 
   container.addEventListener("touchstart", (e) => {
     startY = e.touches[0].clientY;
+    currentY = startY;
     isDragging = true;
   });
 
   container.addEventListener("touchmove", (e) => {
     if (!isDragging) return;
+
     currentY = e.touches[0].clientY;
 
     const diff = currentY - startY;
@@ -123,12 +184,13 @@ function setupSwipeToClose() {
 
   container.addEventListener("touchend", () => {
     if (!isDragging) return;
+
     isDragging = false;
 
     const diff = currentY - startY;
 
     if (diff > 120) {
-      Turbo.visit("/dashboard");
+      navigateStory("/dashboard");
     } else {
       container.style.transition = "transform 0.2s ease";
       container.style.transform = "translateY(0)";
@@ -138,17 +200,28 @@ function setupSwipeToClose() {
 
 // PC：ESCキーで閉じる
 function setupEscClose() {
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      Turbo.visit("/dashboard");
-    }
-  });
+  document.addEventListener("keydown", handleEscClose);
 }
 
+function handleEscClose(e) {
+  if (e.key === "Escape") {
+    navigateStory("/dashboard");
+  }
+}
+
+// Turboで画面が読み込まれたとき
 document.addEventListener("turbo:load", () => {
   handleImageStory();
   handleVideoStory();
   setupTapNavigation();
   setupSwipeToClose();
   setupEscClose();
+});
+
+// Turboで画面を離れるときにタイマーを停止
+document.addEventListener("turbo:before-cache", () => {
+  clearTimeout(imageStoryTimeout);
+  cancelAnimationFrame(progressRequest);
+
+  document.removeEventListener("keydown", handleEscClose);
 });

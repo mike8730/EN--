@@ -24,20 +24,18 @@
         <% end %>
       </div>
 
-      <!-- ユーザーごとにストーリーをまとめて表示 -->
       <% @story_groups.each do |user, stories| %>
         <% read = stories.any? { |s| StoryRead.exists?(user: current_user, story: s) } %>
+        <% first_story = stories.min_by { |s| [s.created_at, s.id] } %>
 
         <div class="story-item <%= read ? 'story-read' : 'story-unread' %>">
-          <%= link_to story_path(stories.last, index: 0) do %>
+          <%= link_to story_path(first_story) do %>
             <%= image_tag(user.avatar.presence || "default_avatar.png", class: "story-avatar") %>
           <% end %>
 
-
           <p class="story-name"><%= user.name %></p>
         </div>
-      <% end %>
-
+      <% end %> 
     </div>
   </div>
 
