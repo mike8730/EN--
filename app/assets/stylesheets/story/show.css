@@ -1,0 +1,131 @@
+/* ===== ストーリー再生画面（show） ===== */
+
+.story-show-container {
+  position: relative;
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.story-show-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  pointer-events: none; /* 透明部分はクリックを通す */
+}
+
+.story-show-header * {
+  pointer-events: auto; /* アバターと名前はクリック可能 */
+}
+
+.story-show-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.story-show-user-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* メディアを画面内に収める */
+.story-show-media {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.story-show-image,
+.story-show-video {
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+/* キャプション（下部に固定） */
+.story-show-caption {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.story-progress-wrapper {
+  display: flex;
+  gap: 4px;
+  padding: 10px;
+}
+
+.story-progress-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.story-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+.story-progress-fill.active {
+  width: 0%;
+}
+
+/* 動画を最前面にする */
+.story-show-video,
+.story-show-image {
+  position: relative;
+  z-index: 10;
+}
+
+/* 左右タップ領域は動画の後ろに置く */
+.story-tap-left,
+.story-tap-right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  z-index: 5; /* 動画より下 */
+}
+
+.story-tap-left {
+  left: 0;
+}
+
+.story-tap-right {
+  right: 0;
+}
+
+.story-close-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* スマホでは非表示 */
+@media (max-width: 768px) {
+  .story-close-button {
+    display: none;
+  }
+}
+

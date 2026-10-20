@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validate :age_range_valid
   
   has_one_attached :avatar
+  has_many :stories, dependent: :destroy
 
   private
 

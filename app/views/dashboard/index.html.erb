@@ -1,26 +1,41 @@
 <div class="home-container">
 
+  <% if user_signed_in? %>
+     <%= button_to "ログアウト",
+         destroy_user_session_path,
+         method: :delete %>
+  <% end %>
 
   <!-- ストーリー（即飲み募集） -->
   <div class="stories-section">
     <h2 class="section-title">今すぐ飲める人</h2>
+
     <div class="stories-list">
-      <div class="story-item">
-        <img src="https://placehold.co/80x80" class="story-avatar">
-        <p class="story-name">ゆか</p>
+
+      <!-- 自分のストーリー追加 -->
+      <div class="story-item story-unread">
+        <%= link_to new_story_path do %>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar, class:"story-avatar" %>
+          <% else %>
+            <%= image_tag "default_avatar.png", class:"story-avatar"%>
+          <% end %>
+          <p class="story-name">ストーリーを追加</p>
+        <% end %>
       </div>
-      <div class="story-item">
-        <img src="https://placehold.co/80x80" class="story-avatar">
-        <p class="story-name">あいり</p>
-      </div>
-      <div class="story-item">
-        <img src="https://placehold.co/80x80" class="story-avatar">
-        <p class="story-name">みさき</p>
-      </div>
-      <div class="story-item">
-        <%= image_tag @user.avatar, class:"story-avatar" %>
-        <p class="story-name">みさき</p>
-      </div>
+
+      <% @story_groups.each do |user, stories| %>
+        <% read = stories.any? { |s| StoryRead.exists?(user: current_user, story: s) } %>
+        <% first_story = stories.min_by { |s| [s.created_at, s.id] } %>
+
+        <div class="story-item <%= read ? 'story-read' : 'story-unread' %>">
+          <%= link_to story_path(first_story) do %>
+            <%= image_tag(user.avatar.presence || "default_avatar.png", class: "story-avatar") %>
+          <% end %>
+
+          <p class="story-name"><%= user.name %></p>
+        </div>
+      <% end %> 
     </div>
   </div>
 
